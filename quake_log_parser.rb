@@ -10,4 +10,9 @@ class QuakeLogParser
 	  linhas_array
 	end
 
+	#Método para realizar o parse em cada linha do arquivo
+	def self.parse_jogo
+		linhas_log = QuakeLogParser.ler_arquivo		
+	end
+
 end
