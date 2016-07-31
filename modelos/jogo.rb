@@ -1,0 +1,3 @@
+class Jogo
+
+end
