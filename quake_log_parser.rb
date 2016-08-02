@@ -1,3 +1,4 @@
+require_relative 'modelos/jogo'
 require_relative 'modulo/parse_log'
 class QuakeLogParser
 	
@@ -18,18 +19,20 @@ class QuakeLogParser
 		
 		jogos = []
 		inicio_jogo_linha = nil
+
 		linhas_log.each_with_index do |linha_log, index|
-			
+
 			#verificando se é o inicio do jogo ("InitGame")	
 			if ParseLog.inicio_jogo_linha?(linha_log)
-			  inicio_jogo_linha = index
+				inicio_jogo_linha = index
 			
 			#verificando se é o final do jogo ("------+")
 			elsif ParseLog.fim_jogo_linha?(linha_log)
-			  #Caso tenha sido encontrado a linha do inicio do jogo, ele adiciona
-			  jogos << "game_#{jogos.count+1}" unless inicio_jogo_linha.nil?
-			  #puts log_lines[1,8]
-			  inicio_jogo_linha = nil
+				fim_jogo_linha = index - inicio_jogo_linha.to_i + 1
+				#Caso tenha sido encontrado a linha do inicio do jogo, ele adiciona
+				jogos << (Jogo.new linhas_log[inicio_jogo_linha, fim_jogo_linha] ,"game_#{jogos.count+1}") unless inicio_jogo_linha.nil?
+				#puts log_lines[1,8]
+				inicio_jogo_linha = nil
 			end
 		end
 		jogos
