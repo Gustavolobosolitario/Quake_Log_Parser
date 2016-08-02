@@ -1,4 +1,4 @@
- module ParseLog
+module ParseLog
 
   #regra para identificar o inicio de jogo
   def self.inicio_jogo_regra
