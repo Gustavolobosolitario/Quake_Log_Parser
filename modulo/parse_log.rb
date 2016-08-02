@@ -10,11 +10,21 @@ module ParseLog
     /--------+/
   end
 
-  #regra para verificar o numero de mortes (kill) por jogo
+  #regra para capturar o trecho onde apresenta quem matou e quem morreu
   def self.kill_regra
-    /Kill:/
+    /:\s([^:]+)\skilled\s(.*?)\s/
   end
 
+  #regra para capturar o quem matou, com base no kill_regra.
+  def self.matou_regra
+    /(?<=:\s)(.*?)(?=\skilled)/
+  end
+
+  #regra para capturar o quem morreu, com base no kill_regra.
+  def self.morreu_regra
+    /(?<=killed\s)(.*?)(?=\s)/
+  end
+  
   #regra para vefiricar se existe informações do jogador
   def self.jogador_info_regra
     /ClientUserinfoChanged: \d n\\(.*?)\\/
