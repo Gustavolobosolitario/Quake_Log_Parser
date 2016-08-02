@@ -11,7 +11,7 @@ module ParseLog
   end
 
   #regra para verificar o numero de mortes (kill) por jogo
-  def self.morte_regra
+  def self.kill_regra
     /Kill:/
   end
 
