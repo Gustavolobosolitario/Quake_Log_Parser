@@ -15,6 +15,17 @@ module ParseLog
     /Kill:/
   end
 
+  #regra para vefiricar se existe informações do jogador
+  def self.jogador_info_regra
+    /ClientUserinfoChanged: \d n\\(.*?)\\/
+  end
+
+  #regra para capturar o nome do jogador
+  #Retornado por self.jogador_info_regra
+  def self.jogador_nome_regra
+    /(?<=\\)(.*?)(?=\\)/
+  end
+
   #metodos para usar as regras
   def self.inicio_jogo_linha?(linha_log)
     linha_log =~ ParseLog.inicio_jogo_regra
@@ -26,5 +37,9 @@ module ParseLog
 
   def self.morte_linha?(linha_log)
     linha_log =~ ParseLog.kill_regra
+  end
+
+  def self.jogador_linha?(linha_log)
+    linha_log =~ ParseLog.jogador_info_regra
   end
 end
