@@ -12,7 +12,7 @@ module ParseLog
 
   #regra para capturar o trecho onde apresenta quem matou e quem morreu
   def self.kill_regra
-    /:\s([^:]+)\skilled\s(.*?)\sby/
+    /:\s([^:]+)\skilled\s(.*?)\sby\s[a-zA-Z_]+/
   end
 
   #regra para capturar o quem matou, com base no kill_regra.
@@ -24,7 +24,11 @@ module ParseLog
   def self.morreu_regra
     /(?<=killed\s)(.*?)(?=\sby)/
   end
-  
+
+  #regra para capturar a causa da morte
+  def self.causa_morte
+    /(?<=by\s)(.*?)(?=$)/
+  end
   #regra para vefiricar se existe informações do jogador
   def self.jogador_info_regra
     /ClientUserinfoChanged: \d n\\(.*?)\\/
