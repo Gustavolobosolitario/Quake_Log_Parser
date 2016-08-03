@@ -50,7 +50,7 @@ class Jogo
 		#retorna o jogador com o nome e com o numero de kills
 		jogador.map {|jogador_array| jogador_array[1]}
 	end
-	private
+	
 	def att_mortes(morte)
 		if morte.matou == "<world>" #or morte.matou == morte.morreu (Caso for considerar suicidio)
 			@players[morte.morreu].kills -= 1
@@ -59,4 +59,24 @@ class Jogo
 		end 
 	end	
 
+	def self.rank(games)
+		rank_geral = []
+		jogador_hash = {}
+		games.each do |game|
+			game.players.each do |jogador_nome, jogador|
+				if jogador_hash[jogador_nome].nil?
+					jogador_hash[jogador_nome] = (Jogador.new jogador.nome, jogador.kills)
+				else
+					jogador_inserido = jogador_hash[jogador_nome]
+					jogador_inserido.kills += jogador.kills
+				end
+			end
+		end
+		#Array de jogadores ordenados pelo numero de kills
+		jogador_array_ord = jogador_hash.sort_by{|p, q| q.kills}.reverse
+		jogador_array_ord.map {|p,q|q}.each do |jogador|
+			rank_geral << "PLAYER #{jogador.nome} #{jogador.kills} KILLS"
+		end
+		rank_geral
+	end
 end
