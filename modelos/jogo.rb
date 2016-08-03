@@ -4,7 +4,7 @@ require_relative 'jogador'
 require_relative 'morte'
 class Jogo
 
-	attr_accessor :game, :total_kills, :players, :kills, :teste
+	attr_accessor :game, :total_kills, :players, :kills
 
 	def initialize(linhas_log_array, game)
 
@@ -20,13 +20,12 @@ class Jogo
 				jogador_nome = linha_log[ParseLog.jogador_info_regra][ParseLog.jogador_nome_regra]
 				#se a não possui o nome do jogador no array,(players), adiciona o novo jogador
 				@players[jogador_nome] = (Jogador.new jogador_nome) unless @players[jogador_nome]
-				#puts @players.map {|jogador| jogador[1]}
-				
-				
+			
 			elsif ParseLog.morte_linha?(linha_log)
 				linha_morte = linha_log[ParseLog.kill_regra]
-				morte = Morte.new linha_morte[ParseLog.matou_regra]
-				@kills << morte 
+				morte = Morte.new linha_morte[ParseLog.matou_regra], linha_morte[ParseLog.morreu_regra]
+				@kills << morte
+				att_mortes(morte)
 			end
 		end
 
@@ -51,4 +50,13 @@ class Jogo
 		#retorna o jogador com o nome e com o numero de kills
 		jogador.map {|jogador_array| jogador_array[1]}
 	end
+	private
+	def att_mortes(morte)
+		if morte.matou == "<world>" #or morte.matou == morte.morreu (Caso for considerar suicidio)
+			@players[morte.morreu].kills -= 1
+		else
+			@players[morte.matou].kills +=1
+		end 
+	end	
+
 end
