@@ -7,6 +7,6 @@ class Jogador
   end
 
   def to_s
-    "#{self.nome}: #{self.kills}"
+       "#{self.nome}: #{self.kills}"
   end
 end
