@@ -20,7 +20,7 @@ class Jogo
 				jogador_nome = linha_log[ParseLog.jogador_info_regra][ParseLog.jogador_nome_regra]
 				#se a não possui o nome do jogador no array,(players), adiciona o novo jogador
 				@players[jogador_nome] = (Jogador.new jogador_nome) unless @players[jogador_nome]
-			
+
 			elsif ParseLog.morte_linha?(linha_log)
 				linha_morte = linha_log[ParseLog.kill_regra]
 				morte = Morte.new linha_morte[ParseLog.matou_regra], linha_morte[ParseLog.morreu_regra]
@@ -50,16 +50,16 @@ class Jogo
 		#retorna o jogador com o nome e com o numero de kills
 		jogador.map {|jogador_array| jogador_array[1]}
 	end
-	
+
 	def att_mortes(morte)
 		if morte.matou == "<world>" #or morte.matou == morte.morreu (Caso for considerar suicidio)
 			@players[morte.morreu].kills -= 1
 		else
 			@players[morte.matou].kills +=1
-		end 
-	end	
+		end
+	end
 
-	def self.rank(games)
+	def self.ranking_geral(games)
 		rank_geral = []
 		jogador_hash = {}
 		games.each do |game|
@@ -79,4 +79,31 @@ class Jogo
 		end
 		rank_geral
 	end
+
+	def self.ranking_game(games)
+		rank_game = []
+		jogador_hash = {}
+#		teste = []
+		i=0
+		games.each do |game|
+			teste = []
+			t = []
+
+			game.players.each do |jogador_nome, jogador|
+				teste << jogador
+			end
+			ca = teste.sort_by {|p|p.kills}.reverse
+			ca.map{|c|c}.each do |jogador|
+				t << "PLAYER #{jogador.nome} #{jogador.kills} KILLS"
+			end
+			rank_game << 	t
+		end
+		#Array de jogadores ordenados pelo numero de kills
+#		jogador_array_ord = jogador_hash.sort_by{|p, q| q.kills}.reverse
+#		jogador_array_ord.map {|p,q|q}.each do |jogador|
+#			rank_geral << "PLAYER #{jogador.nome} #{jogador.kills} KILLS"
+		rank_game
+		end
+
+
 end
