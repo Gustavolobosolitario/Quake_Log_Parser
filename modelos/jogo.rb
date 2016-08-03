@@ -23,8 +23,9 @@ class Jogo
 
 			elsif ParseLog.morte_linha?(linha_log)
 				linha_morte = linha_log[ParseLog.kill_regra]
-				morte = Morte.new linha_morte[ParseLog.matou_regra], linha_morte[ParseLog.morreu_regra]
+				morte = Morte.new linha_morte[ParseLog.matou_regra], linha_morte[ParseLog.morreu_regra],linha_morte[ParseLog.causa_morte]
 				@kills << morte
+
 				att_mortes(morte)
 			end
 		end
@@ -82,28 +83,24 @@ class Jogo
 
 	def self.ranking_game(games)
 		rank_game = []
-		jogador_hash = {}
-#		teste = []
-		i=0
-		games.each do |game|
-			teste = []
-			t = []
 
-			game.players.each do |jogador_nome, jogador|
-				teste << jogador
+		games.each do |game|
+			texto_rank = []
+			jogadores = game.players.map{|p, q|q}.sort_by {|p|p.kills}.reverse
+
+			jogadores.each do |jogador|
+				texto_rank << "PLAYER #{jogador.nome} #{jogador.kills} KILLS"
 			end
-			ca = teste.sort_by {|p|p.kills}.reverse
-			ca.map{|c|c}.each do |jogador|
-				t << "PLAYER #{jogador.nome} #{jogador.kills} KILLS"
-			end
-			rank_game << 	t
+			rank_game << 	texto_rank
 		end
-		#Array de jogadores ordenados pelo numero de kills
-#		jogador_array_ord = jogador_hash.sort_by{|p, q| q.kills}.reverse
-#		jogador_array_ord.map {|p,q|q}.each do |jogador|
-#			rank_geral << "PLAYER #{jogador.nome} #{jogador.kills} KILLS"
 		rank_game
 		end
 
-
+		def causa_morte
+			causa_morte_hash = {}
+			self.kills.each do |morte|
+				causa_morte_hash[morte.causa_morte] = causa_morte_hash[morte.causa_morte].to_i + 1
+			end
+			causa_morte_hash.sort_by{ |p,q| q	}.reverse!
+		end
 end

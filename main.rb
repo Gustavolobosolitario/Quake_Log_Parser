@@ -18,5 +18,21 @@ class Main
   @ranking_game.each do |game|
     puts "Game #{i+=1}"
     puts game
+    puts "\n"
   end
+
+  puts "---------- TASK 3 ----------"
+  puts "RANKING DE CAUSAS DE MORTE"
+  @games.each do |game|
+
+     puts " #{game.game}: {"
+     puts "   Causas de mortes: {"
+      game.causa_morte.each do |causa|
+        puts "     '#{causa.first}' : #{causa.last}"
+      end
+      puts "   }"
+      puts "}\n\n"
+  end
+
+
 end
