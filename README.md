@@ -30,7 +30,7 @@ game_1: {
     }
   }
 ```
-###Observações
+### Observações
 1. Quando o "\<world\>" mata o player ele perde -1 kill.
 2. "\<world\>" não é um player e não deve aparecer na lista de players e nem no dicionário de kills.
 
