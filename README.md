@@ -2,11 +2,11 @@
 
 O projeto tem como objetivo realizar um parser do arquivo games.log, afim de realizar os seguintes objetivos
 
-##Task 1
+## Task 1
 
 O parser deve ser capaz de ler o arquivo, agrugar os dados de cada jogo, e em cada jogo deve coletar as informações de morte.
 
-###Exemplo
+### Exemplo
 ```
  21:42 Kill: 1022 2 22: <world> killed Isgalamido by MOD_TRIGGER_HURT
 ```
@@ -34,7 +34,7 @@ game_1: {
 1. Quando o "\<world\>" mata o player ele perde -1 kill.
 2. "\<world\>" não é um player e não deve aparecer na lista de players e nem no dicionário de kills.
 
-##Task 2
+## Task 2
 Após construir o parser constrir um script que imprima um relatório de cada jogo (simplemente usando o hash) e um ranking geral de kills por jogador.
 
 Formato:
@@ -51,7 +51,7 @@ PLAYER Dono da Bola 15 KILLS
 PLAYER Isgalamido -1 KILLS
 ```
 
-##Task 3
+## Task 3
 Caso consiga fazer tudo acima e ainda tiver tempo e paciência
 No relatório mostrar as maiores causas de morte por partida.
 
@@ -89,5 +89,5 @@ Nessa Task, o codigo está gerando algo como:
    }
 }
 ```
-##Observação
+## Observação
 1. O codigo está em Ruby
